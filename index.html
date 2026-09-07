@@ -295,8 +295,15 @@
     </footer>
 
   </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const SUPABASE_URL = "https://hpxkhtkhzusudseewzjc.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_HxGIiny_jdgL15aYHBSfgQ_Dd69Sdxa";
+
+    const supabase = window.supabase.createClient(
+     SUPABASE_URL,
+     SUPABASE_PUBLISHABLE_KEY
+    );
     function submitIdea() {
       window.location.href = "https://naver.me/5B0IPY1y";
     }
