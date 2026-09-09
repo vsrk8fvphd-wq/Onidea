@@ -227,7 +227,20 @@
   justify-content: center;
   font-size: 25px;
 }
+.process-icon svg {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: #171717;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
+.process-step.active .process-icon svg {
+  stroke: #3156d3;
+}
+    
 .process-text {
   display: flex;
   flex-direction: column;
