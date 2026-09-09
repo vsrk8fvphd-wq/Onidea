@@ -548,7 +548,7 @@ async function likeIdea(button) {
     .from("idea_votes")
     .select("id")
     .eq("idea_id", ideaId)
-    .eq("voter_key", "voterKey")
+    .eq("voter_key", voterKey)
     .maybeSingle();
 
   if (checkError) {
@@ -579,7 +579,7 @@ async function likeIdea(button) {
       .from("idea_votes")
       .insert({
         idea_id: ideaId,
-        voter_key: "voterKey"
+        voter_key: voterKey
       });
 
     if (error) {
