@@ -317,15 +317,27 @@
 async function likeIdea(button) {
   const ideaId = Number(button.dataset.ideaId);
   const number = button.querySelector("span");
-  const isActive = button.classList.contains("active");
 
-  if (isActive) {
-    // 공감 취소
+  // 내가 이미 공감했는지 확인
+  const { data: existingVote, error: checkError } = await supabaseClient
+    .from("idea_votes")
+    .select("id")
+    .eq("idea_id", ideaId)
+    .eq("voter_key", "test-user")
+    .maybeSingle();
+
+  if (checkError) {
+    console.error("공감 확인 실패:", checkError);
+    alert("공감 확인에 실패했어요.");
+    return;
+  }
+
+  if (existingVote) {
+    // 이미 공감한 경우 → 공감 취소
     const { error } = await supabaseClient
       .from("idea_votes")
       .delete()
-      .eq("idea_id", ideaId)
-      .eq("voter_key", "test-user");
+      .eq("id", existingVote.id);
 
     if (error) {
       console.error("공감 취소 실패:", error);
@@ -337,7 +349,7 @@ async function likeIdea(button) {
     number.textContent = Number(number.textContent) - 1;
 
   } else {
-    // 공감 등록
+    // 아직 공감하지 않은 경우 → 공감
     const { error } = await supabaseClient
       .from("idea_votes")
       .insert({
