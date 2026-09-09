@@ -31,10 +31,10 @@
       background: #f7f5ef;
     }
 
-    .process-image {
+   .logo-image {
      display: block;
-     width: 100%;
-     max-width: 520px;
+     width: 260px;
+     max-width: 100%;
      height: auto;
      margin: 0 auto;
    }
@@ -195,6 +195,68 @@
       color: #aaa;
       font-size: 12px;
     }
+    .process {
+  margin: 10px 22px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.process-step {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: #f7f5ef;
+}
+
+.process-step.active {
+  background: #eef3ff;
+}
+
+.process-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.process-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+
+.process-text strong {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: #171717;
+}
+
+.process-step.active .process-text strong {
+  color: #3156d3;
+}
+
+.process-text span {
+  font-size: 13px;
+  color: #777;
+  letter-spacing: -0.3px;
+}
+
+.process-arrow {
+  font-size: 18px;
+  line-height: 1;
+  color: #aaa;
+}
   </style>
 </head>
 
@@ -203,9 +265,57 @@
   <div class="app">
 
     <header>
-    <img src="IMG_9501.png" alt="ON:IDEA" class="logo-image">
+      <img src="IMG_9502.png" alt="ON:IDEA" class="logo-image">
     </header>
+<section class="process">
+  <div class="process-step active">
+    <div class="process-icon">💡</div>
+    <div class="process-text">
+      <strong>IDEA ON</strong>
+      <span>아이디어 자유 제안</span>
+    </div>
+  </div>
 
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-icon">👥</div>
+    <div class="process-text">
+      <strong>IDEA PICK</strong>
+      <span>우수 아이디어 선정</span>
+    </div>
+  </div>
+
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-icon">⚙️</div>
+    <div class="process-text">
+      <strong>IDEA BUILD</strong>
+      <span>아이디어 고도화</span>
+    </div>
+  </div>
+
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-icon">🚀</div>
+    <div class="process-text">
+      <strong>IDEA ACTION</strong>
+      <span>혁신과제 선정·실행</span>
+    </div>
+  </div>
+
+  <div class="process-arrow">↓</div>
+
+  <div class="process-step">
+    <div class="process-icon">🔗</div>
+    <div class="process-text">
+      <strong>IDEA SHARE</strong>
+      <span>성과공유</span>
+    </div>
+  </div>
+</section>
     <section class="hero">
       <div class="eyebrow">IDEA ON 🚆</div>
 
