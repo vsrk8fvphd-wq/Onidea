@@ -525,7 +525,7 @@ async function loadLikeStatus() {
     number.textContent = data.length;
 
     const myVote = data.some(
-      vote => vote.voter_key === "test-user"
+      vote => vote.voter_key === voterKey
     );
 
     if (myVote) {
@@ -535,6 +535,10 @@ async function loadLikeStatus() {
     }
   }
 }
+    const voterKey =
+  localStorage.getItem("onidea_voter_key") || crypto.randomUUID();
+
+localStorage.setItem("onidea_voter_key", voterKey);
 async function likeIdea(button) {
   const ideaId = Number(button.dataset.ideaId);
   const number = button.querySelector("span");
@@ -544,7 +548,7 @@ async function likeIdea(button) {
     .from("idea_votes")
     .select("id")
     .eq("idea_id", ideaId)
-    .eq("voter_key", "test-user")
+    .eq("voter_key", "voterKey")
     .maybeSingle();
 
   if (checkError) {
@@ -575,7 +579,7 @@ async function likeIdea(button) {
       .from("idea_votes")
       .insert({
         idea_id: ideaId,
-        voter_key: "test-user"
+        voter_key: "voterKey"
       });
 
     if (error) {
