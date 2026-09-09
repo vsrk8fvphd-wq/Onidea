@@ -316,25 +316,44 @@
 
 async function likeIdea(button) {
   const ideaId = Number(button.dataset.ideaId);
-
-  const { error } = await supabaseClient
-    .from("idea_votes")
-    .insert({
-      idea_id: ideaId,
-      voter_key: "test-user"
-    });
-
-  if (error) {
-    console.error("공감 저장 실패:", error);
-    alert("공감 저장에 실패했어요.");
-    return;
-  }
-
-  button.classList.add("active");
-
   const number = button.querySelector("span");
-  let count = Number(number.textContent);
-  number.textContent = count + 1;
+  const isActive = button.classList.contains("active");
+
+  if (isActive) {
+    // 공감 취소
+    const { error } = await supabaseClient
+      .from("idea_votes")
+      .delete()
+      .eq("idea_id", ideaId)
+      .eq("voter_key", "test-user");
+
+    if (error) {
+      console.error("공감 취소 실패:", error);
+      alert("공감 취소에 실패했어요.");
+      return;
+    }
+
+    button.classList.remove("active");
+    number.textContent = Number(number.textContent) - 1;
+
+  } else {
+    // 공감 등록
+    const { error } = await supabaseClient
+      .from("idea_votes")
+      .insert({
+        idea_id: ideaId,
+        voter_key: "test-user"
+      });
+
+    if (error) {
+      console.error("공감 저장 실패:", error);
+      alert("공감 저장에 실패했어요.");
+      return;
+    }
+
+    button.classList.add("active");
+    number.textContent = Number(number.textContent) + 1;
+  }
 }
   </script>
 
