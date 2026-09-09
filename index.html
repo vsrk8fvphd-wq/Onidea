@@ -313,7 +313,36 @@
         behavior: "smooth"
       });
     }
+async function loadLikeStatus() {
+  const buttons = document.querySelectorAll(".like[data-idea-id]");
 
+  for (const button of buttons) {
+    const ideaId = Number(button.dataset.ideaId);
+    const number = button.querySelector("span");
+
+    const { data, error } = await supabaseClient
+      .from("idea_votes")
+      .select("id, voter_key")
+      .eq("idea_id", ideaId);
+
+    if (error) {
+      console.error("공감 상태 불러오기 실패:", error);
+      continue;
+    }
+
+    number.textContent = data.length;
+
+    const myVote = data.some(
+      vote => vote.voter_key === "test-user"
+    );
+
+    if (myVote) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
+    }
+  }
+}
 async function likeIdea(button) {
   const ideaId = Number(button.dataset.ideaId);
   const number = button.querySelector("span");
@@ -367,6 +396,7 @@ async function likeIdea(button) {
     number.textContent = Number(number.textContent) + 1;
   }
 }
+  loadLikeStatus();
   </script>
 
 </body>
