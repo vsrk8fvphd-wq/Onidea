@@ -399,6 +399,65 @@
   line-height: 1.3;
   color: #a5a5a5;
 }
+    .idea-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.idea-modal.show {
+  display: flex;
+}
+
+.idea-modal-content {
+  position: relative;
+
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+  border-radius: 20px;
+
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.idea-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+
+  border: none;
+  background: none;
+
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.modal-section {
+  margin-top: 22px;
+}
+
+.modal-section h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.modal-section p {
+  margin: 0;
+  line-height: 1.6;
+  color: #555;
+}
   </style>
 </head>
 
@@ -585,6 +644,7 @@
     const ideas = await response.json();
 
     console.log("Supabase 아이디어:", ideas);
+    window.currentIdeas = ideas;
 renderIdeas(ideas);
     return ideas;
 
@@ -722,7 +782,7 @@ async function likeIdea(button) {
 loadIdeas().then(() => {
   loadLikeStatus();
 });
-    function renderIdeas(ideas) {
+function renderIdeas(ideas) {
   const list = document.querySelector(".idea-list");
 
   if (!list) return;
@@ -745,20 +805,82 @@ loadIdeas().then(() => {
       <div class="idea-bottom">
         <span class="author">익명</span>
 
-        <button
-          class="like"
-          data-idea-id="${idea.id}"
-          onclick="likeIdea(this)"
-        >
-          👍 공감 <span>${idea.like_count || 0}</span>
-        </button>
+        <div>
+          <button
+            class="more"
+            onclick="showIdeaDetail(${idea.id})"
+          >
+            더보기
+          </button>
+
+          <button
+            class="like"
+            data-idea-id="${idea.id}"
+            onclick="likeIdea(this)"
+          >
+            👍 공감 <span>${idea.like_count || 0}</span>
+          </button>
+        </div>
       </div>
     `;
 
     list.appendChild(card);
   });
 }
-  </script>
+    function showIdeaDetail(id) {
+  const idea = window.currentIdeas?.find(item => item.id === id);
 
+  if (!idea) return;
+
+  document.getElementById("modalCategory").textContent =
+    idea.category || "";
+
+  document.getElementById("modalTitle").textContent =
+    idea.title || "";
+
+  document.getElementById("modalContent").textContent =
+    idea.content || "";
+
+  document.getElementById("modalProblem").textContent =
+    idea.problem || "내용 없음";
+
+  document.getElementById("modalEffect").textContent =
+    idea.effect || "내용 없음";
+
+  document.getElementById("ideaModal").classList.add("show");
+}
+
+function closeIdeaDetail() {
+  document.getElementById("ideaModal").classList.remove("show");
+}
+  </script>
+<div id="ideaModal" class="idea-modal">
+  <div class="idea-modal-content">
+
+    <button class="idea-modal-close" onclick="closeIdeaDetail()">
+      ×
+    </button>
+
+    <span id="modalCategory" class="tag"></span>
+
+    <h2 id="modalTitle"></h2>
+
+    <div class="modal-section">
+      <h4>❓ 문제점</h4>
+      <p id="modalProblem"></p>
+    </div>
+
+    <div class="modal-section">
+      <h4>💡 개선 아이디어</h4>
+      <p id="modalContent"></p>
+    </div>
+
+    <div class="modal-section">
+      <h4>✨ 기대효과</h4>
+      <p id="modalEffect"></p>
+    </div>
+
+  </div>
+</div>
 </body>
 </html>
