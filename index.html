@@ -458,6 +458,23 @@
   line-height: 1.6;
   color: #555;
 }
+    .more {
+  border: none;
+  background: transparent;
+
+  padding: 4px 6px;
+  margin-right: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: #777;
+
+  cursor: pointer;
+}
+
+.more:hover {
+  color: #3156d3;
+}
   </style>
 </head>
 
@@ -805,13 +822,12 @@ function renderIdeas(ideas) {
       <div class="idea-bottom">
         <span class="author">익명</span>
 
-        <div>
-          <button
-            class="more"
-            onclick="showIdeaDetail(${idea.id})"
-          >
-            더보기
-          </button>
+<button
+  class="more"
+  onclick="showIdeaDetail(${idea.id})"
+>
+  자세히 보기 〉
+</button>
 
           <button
             class="like"
