@@ -475,6 +475,87 @@
 .more:hover {
   color: #3156d3;
 }
+    .best-idea-content h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.best-idea-subtitle {
+  margin: 6px 0 20px;
+  color: #888;
+  font-size: 13px;
+}
+
+.best-idea-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px 4px;
+
+  border: none;
+  border-bottom: 1px solid #eeeeee;
+
+  background: transparent;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.best-idea-item:last-child {
+  border-bottom: none;
+}
+
+.best-rank {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f3f3f3;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  flex-shrink: 0;
+}
+
+.best-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.best-info .tag {
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.best-info h3 {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.best-like {
+  flex-shrink: 0;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #777;
+}
   </style>
 </head>
 
@@ -579,8 +660,8 @@
         💡 아이디어 내기
       </button>
 
-      <button class="secondary" onclick="scrollToIdeas()">
-        👀 아이디어 둘러보기
+      <button class="secondary" onclick="showBestIdeas()">
+        🏆 BEST IDEA
       </button>
 
       <div class="notice">
@@ -866,6 +947,51 @@ function renderIdeas(ideas) {
 function closeIdeaDetail() {
   document.getElementById("ideaModal").classList.remove("show");
 }
+    function showBestIdeas() {
+  const list = document.getElementById("bestIdeaList");
+
+  if (!list || !window.currentIdeas) return;
+
+  const bestIdeas = [...window.currentIdeas]
+    .sort((a, b) => (b.like_count || 0) - (a.like_count || 0))
+    .slice(0, 5);
+
+  list.innerHTML = "";
+
+  bestIdeas.forEach((idea, index) => {
+    const item = document.createElement("button");
+
+    item.className = "best-idea-item";
+
+    item.onclick = function () {
+      closeBestIdeas();
+      showIdeaDetail(idea.id);
+    };
+
+    item.innerHTML = `
+      <div class="best-rank">
+        ${index + 1}
+      </div>
+
+      <div class="best-info">
+        <span class="tag">${idea.category}</span>
+        <h3>${idea.title}</h3>
+      </div>
+
+      <div class="best-like">
+        👍 ${idea.like_count || 0}
+      </div>
+    `;
+
+    list.appendChild(item);
+  });
+
+  document.getElementById("bestIdeaModal").classList.add("show");
+}
+
+function closeBestIdeas() {
+  document.getElementById("bestIdeaModal").classList.remove("show");
+}
   </script>
 <div id="ideaModal" class="idea-modal">
   <div class="idea-modal-content">
@@ -894,6 +1020,23 @@ function closeIdeaDetail() {
     </div>
 
   </div>
+<div id="bestIdeaModal" class="idea-modal">
+  <div class="idea-modal-content best-idea-content">
+
+    <button class="idea-modal-close" onclick="closeBestIdeas()">
+      ×
+    </button>
+
+    <h2>🏆 BEST IDEA</h2>
+
+    <p class="best-idea-subtitle">
+      가장 많은 공감을 받은 아이디어 TOP 5
+    </p>
+
+    <div id="bestIdeaList"></div>
+
+  </div>
+</div>
 </div>
 </body>
 </html>
