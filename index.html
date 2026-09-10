@@ -318,10 +318,10 @@
   margin: 0 auto !important;
   padding: 9px 14px;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 70px 1px auto;
   align-items: center;
   justify-content: center;
-  gap: 8px;
 
   border-radius: 16px;
   background: #ffffff !important;
@@ -329,21 +329,38 @@
 }
 
 .process-step .process-icon {
-  width: 38px;
+  width: 70px;
   height: 38px;
   flex-shrink: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  position: relative;
 }
 
+.process-step .process-icon::after {
+  content: "";
+  position: absolute;
+
+  right: 0;
+  top: 2px;
+  bottom: 2px;
+
+  width: 1px;
+  background: #dddddd;
+}
 .process-step .process-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
   gap: 2.5px;
   text-align: left;
+
+  padding-left: 22px;
 }
 
 .process-step.active {
