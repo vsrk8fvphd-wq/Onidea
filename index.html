@@ -953,11 +953,10 @@ function closeIdeaDetail() {
 function showBestIdeas() {
   const modal = document.getElementById("bestIdeaModal");
 
-  alert(
-    "modal: " + modal +
-    "\n현재 class: " + modal.className +
-    "\n현재 display: " + getComputedStyle(modal).display
-  );
+  if (!modal) return;
+
+  modal.classList.add("show");
+}
 
   modal.classList.add("show");
 }
@@ -999,6 +998,35 @@ function closeBestIdeas() {
 </body>
   <body>
 
+<div id="ideaModal" class="idea-modal">
+  <div class="idea-modal-content">
+
+    <button class="idea-modal-close" onclick="closeIdeaDetail()">
+      ×
+    </button>
+
+    <span id="modalCategory" class="tag"></span>
+
+    <h2 id="modalTitle"></h2>
+
+    <div class="modal-section">
+      <h4>❓ 문제점</h4>
+      <p id="modalProblem"></p>
+    </div>
+
+    <div class="modal-section">
+      <h4>💡 개선 아이디어</h4>
+      <p id="modalContent"></p>
+    </div>
+
+    <div class="modal-section">
+      <h4>✨ 기대효과</h4>
+      <p id="modalEffect"></p>
+    </div>
+
+  </div>
+</div>
+
 <div id="bestIdeaModal" class="idea-modal">
   <div class="idea-modal-content best-idea-content">
 
@@ -1017,5 +1045,5 @@ function closeBestIdeas() {
   </div>
 </div>
 
-<!-- 기존 사이트 내용 -->
+</body>
 </html>
