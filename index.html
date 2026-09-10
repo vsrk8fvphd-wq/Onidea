@@ -769,8 +769,9 @@ async function likeIdea(button) {
     number.textContent = Number(number.textContent) + 1;
   }
 }
+loadIdeas().then(() => {
   loadLikeStatus();
-      loadIdeas();
+});
     function renderIdeas(ideas) {
   const list = document.querySelector(".idea-list");
 
