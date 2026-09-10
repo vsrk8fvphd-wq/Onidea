@@ -131,15 +131,20 @@
       color: #888;
       font-size: 13px;
     }
-    .idea-filter {
+   .idea-filter {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   overflow-x: auto;
-  padding: 2px 0 6px;
+  padding: 2px 8px 6px 0;
   margin-bottom: 12px;
 
-  /* 모바일에서 가로 스크롤바 숨김 */
+  /* 가로 스크롤바 숨김 */
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.idea-filter::-webkit-scrollbar {
+  display: none;
 }
 
 .idea-filter::-webkit-scrollbar {
@@ -150,7 +155,7 @@
   flex-shrink: 0;
   border: 1px solid #e5e5e5;
   border-radius: 20px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   background: white;
   color: #777;
   font-size: 13px;
