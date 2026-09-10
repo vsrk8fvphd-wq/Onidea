@@ -173,28 +173,31 @@
   display: block;
 }
     .idea-list {
-  width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
 
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
   gap: 8px;
 
   align-items: stretch;
 }
 .idea-card {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
   height: 275px;
   padding: 16px;
+
   border: 1px solid #e8e8e8;
   border-radius: 18px;
   background: #ffffff;
-  min-width: 0;
-width: 100%;
 
   display: flex;
   flex-direction: column;
 
-  /* 카드가 눌리는 느낌을 살짝 추가 */
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -545,7 +548,7 @@ width: 100%;
 
     <!-- 여기부터 아이디어 카드 -->
 
-      <div class="idea-list">
+
         <div class="idea-card">
           <span class="tag">디지털·기술</span>
           <h3>회의실 예약 현황을 한눈에 볼 수 있으면 좋겠어요.</h3>
