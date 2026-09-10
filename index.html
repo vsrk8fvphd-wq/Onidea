@@ -137,13 +137,20 @@
       column-gap: 4px;
       row-gap: 8px;
     }
-    .idea-card {
-      padding: 14px;
-      border: 1px solid #e9e9e9;
-      border-radius: 18px;
-      margin-bottom: 0;
-      background: white;
-    }
+.idea-card {
+  padding: 14px;
+  border: 1px solid #e9e9e9;
+  border-radius: 18px;
+  margin-bottom: 0;
+  background: white;
+
+  /* 모든 카드 높이 동일 */
+  height: 275px;
+
+  /* 카드 내부를 세로 구조로 */
+  display: flex;
+  flex-direction: column;
+}
 
     .tag {
       display: inline-block;
@@ -168,12 +175,17 @@
       line-height: 1.5;
     }
 
-    .idea-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 16px;
-    }
+.idea-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  /* 남은 공간을 위쪽으로 밀어서 하단에 고정 */
+  margin-top: auto;
+
+  /* 공감 영역 위쪽 여백 */
+  padding-top: 12px;
+}
 
     .author {
       color: #999;
