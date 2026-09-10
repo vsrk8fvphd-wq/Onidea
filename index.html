@@ -635,7 +635,7 @@
     const ideas = await response.json();
 
     console.log("Supabase 아이디어:", ideas);
-
+renderIdeas(ideas);
     return ideas;
 
   } catch (error) {
@@ -771,6 +771,42 @@ async function likeIdea(button) {
 }
   loadLikeStatus();
       loadIdeas();
+    function renderIdeas(ideas) {
+  const list = document.querySelector(".idea-list");
+
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  ideas.forEach(idea => {
+    const card = document.createElement("div");
+    card.className = "idea-card";
+
+    card.innerHTML = `
+      <span class="tag">${idea.category}</span>
+
+      <h3>${idea.title}</h3>
+
+      <p>
+        ${idea.content}
+      </p>
+
+      <div class="idea-bottom">
+        <span class="author">익명</span>
+
+        <button
+          class="like"
+          data-idea-id="${idea.id}"
+          onclick="likeIdea(this)"
+        >
+          👍 공감 <span>${idea.like_count || 0}</span>
+        </button>
+      </div>
+    `;
+
+    list.appendChild(card);
+  });
+}
   </script>
 
 </body>
