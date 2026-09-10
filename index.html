@@ -616,6 +616,33 @@
     const SUPABASE_URL = "https://hpxkhtkhzusudseewzjc.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_HxGIiny_jdgL15aYHBSfgQ_Dd69Sdxa";
 
+    async function loadIdeas() {
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/ideas?select=id,title,content,problem,effect,category,status,created_at,like_count&order=created_at.desc`,
+      {
+        headers: {
+          "apikey": SUPABASE_PUBLISHABLE_KEY,
+          "Authorization": `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Supabase 오류: ${response.status}`);
+    }
+
+    const ideas = await response.json();
+
+    console.log("Supabase 아이디어:", ideas);
+
+    return ideas;
+
+  } catch (error) {
+    console.error("아이디어 불러오기 실패:", error);
+    return [];
+  }
+}
     const supabaseClient = window.supabase.createClient(
      SUPABASE_URL,
      SUPABASE_PUBLISHABLE_KEY
@@ -743,6 +770,7 @@ async function likeIdea(button) {
   }
 }
   loadLikeStatus();
+      loadIdeas();
   </script>
 
 </body>
