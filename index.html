@@ -819,25 +819,22 @@ function renderIdeas(ideas) {
         ${idea.content}
       </p>
 
-      <div class="idea-bottom">
-        <span class="author">익명</span>
+<div class="idea-bottom">
+  <button
+    class="more"
+    onclick="showIdeaDetail(${idea.id})"
+  >
+    자세히 보기 〉
+  </button>
 
-<button
-  class="more"
-  onclick="showIdeaDetail(${idea.id})"
->
-  자세히 보기 〉
-</button>
-
-          <button
-            class="like"
-            data-idea-id="${idea.id}"
-            onclick="likeIdea(this)"
-          >
-            👍 공감 <span>${idea.like_count || 0}</span>
-          </button>
-        </div>
-      </div>
+  <button
+    class="like"
+    data-idea-id="${idea.id}"
+    onclick="likeIdea(this)"
+  >
+    👍 공감 <span>${idea.like_count || 0}</span>
+  </button>
+</div>
     `;
 
     list.appendChild(card);
