@@ -811,7 +811,8 @@ async function loadLikeStatus() {
     }
 
     number.textContent = data.length;
-
+const idea = window.currentIdeas?.find(item => item.id === ideaId);
+if (idea) idea.like_count = data.length;
     const myVote = data.some(
       vote => vote.voter_key === voterKey
     );
@@ -860,7 +861,8 @@ async function likeIdea(button) {
 
     button.classList.remove("active");
     number.textContent = Number(number.textContent) - 1;
-
+const idea = window.currentIdeas?.find(item => item.id === ideaId);
+if (idea) idea.like_count = Number(number.textContent);
   } else {
     // 아직 공감하지 않은 경우 → 공감
     const { error } = await supabaseClient
@@ -878,6 +880,8 @@ async function likeIdea(button) {
 
     button.classList.add("active");
     number.textContent = Number(number.textContent) + 1;
+    const idea = window.currentIdeas?.find(item => item.id === ideaId);
+if (idea) idea.like_count = Number(number.textContent);
   }
 }
 loadIdeas().then(() => {
