@@ -174,49 +174,73 @@
       row-gap: 8px;
     }
 .idea-card {
-  padding: 14px;
-  border: 1px solid #e9e9e9;
-  border-radius: 18px;
-  margin-bottom: 0;
-  background: white;
-
-  /* 모든 카드 높이 동일 */
   height: 275px;
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 18px;
+  background: #ffffff;
 
-  /* 카드 내부를 세로 구조로 */
   display: flex;
   flex-direction: column;
+
+  /* 카드가 눌리는 느낌을 살짝 추가 */
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-    .tag {
-      display: inline-block;
-      padding: 6px 9px;
-      border-radius: 8px;
-      background: #eef2ff;
-      color: #3156d3;
-      font-size: 12px;
-      font-weight: 700;
-    }
+.idea-card:active {
+  transform: scale(0.98);
+}
 
+   .tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+
+  padding: 6px 9px;
+  border-radius: 8px;
+
+  background: #eef2ff;
+  color: #3156d3;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
     .idea-card h3 {
-      margin: 12px 0 7px;
-      font-size: 17px;
-      letter-spacing: -0.5px;
-    }
+  margin: 13px 0 8px;
 
+  font-size: 16px;
+  line-height: 1.45;
+  letter-spacing: -0.5px;
+
+  /* 제목이 너무 길어도 카드 높이 유지 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
     .idea-card p {
-      margin: 0;
-      color: #666;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+  margin: 0;
+
+  color: #777;
+  font-size: 13px;
+  line-height: 1.55;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
 
 .idea-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   margin-top: auto;
   padding-top: 12px;
+
+  border-top: 1px solid #f0f0f0;
 }
 
     .author {
@@ -225,18 +249,23 @@
     }
 
     .like {
-      border: 1px solid #e5e5e5;
-      border-radius: 20px;
-      padding: 8px 12px;
-      background: white;
-      font-size: 13px;
-    }
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
 
-    .like.active {
-      background: #eef2ff;
-      color: #3156d3;
-      border-color: #cfd8ff;
-    }
+  padding: 7px 11px;
+
+  background: white;
+  color: #555;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.like.active {
+  background: #eef2ff;
+  color: #3156d3;
+  border-color: #cfd8ff;
+}
 
     footer {
       padding: 25px 22px 40px;
