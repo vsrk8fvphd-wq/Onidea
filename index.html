@@ -952,8 +952,43 @@ function closeIdeaDetail() {
 }
 function showBestIdeas() {
   const modal = document.getElementById("bestIdeaModal");
+  const list = document.getElementById("bestIdeaList");
 
-  if (!modal) return;
+  if (!modal || !list || !window.currentIdeas) return;
+
+  const bestIdeas = [...window.currentIdeas]
+    .sort((a, b) => (b.like_count || 0) - (a.like_count || 0))
+    .slice(0, 5);
+
+  list.innerHTML = "";
+
+  bestIdeas.forEach((idea, index) => {
+    const item = document.createElement("button");
+
+    item.className = "best-idea-item";
+
+    item.innerHTML = `
+      <div class="best-rank">
+        ${index + 1}
+      </div>
+
+      <div class="best-info">
+        <span class="tag">${idea.category || ""}</span>
+        <h3>${idea.title || ""}</h3>
+      </div>
+
+      <div class="best-like">
+        👍 ${idea.like_count || 0}
+      </div>
+    `;
+
+    item.onclick = function () {
+      closeBestIdeas();
+      showIdeaDetail(idea.id);
+    };
+
+    list.appendChild(item);
+  });
 
   modal.classList.add("show");
 }
