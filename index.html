@@ -321,11 +321,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0;
 
   border-radius: 16px;
   background: #ffffff !important;
   box-sizing: border-box;
+
+  position: relative;
 }
 
 .process-step .process-icon {
@@ -338,20 +339,25 @@
   justify-content: center;
 
   position: relative;
+  margin: 0;
 }
 
 .process-step .process-icon::after {
   content: "";
+
   position: absolute;
 
   right: 0;
-  top: 2px;
-  bottom: 2px;
+  top: -2px;
+  bottom: -2px;
 
   width: 1px;
   background: #dddddd;
 }
 .process-step .process-text {
+  width: 150px;
+  flex: 0 0 150px;
+
   display: flex;
   flex-direction: column;
 
@@ -359,17 +365,15 @@
   justify-content: center;
 
   gap: 2.5px;
+
   text-align: left;
 
   padding-left: 22px;
+  box-sizing: border-box;
 
-  flex: 0 0 auto;
   min-width: 0;
 }
-    .process-step .process-icon,
-.process-step .process-text {
-  transform: translateX(-15px);
-}
+
 
 .process-step.active {
   background: #eef4ff !important;
