@@ -252,9 +252,9 @@
 }
 .idea-bottom {
   display: grid;
-  grid-template-columns: 1fr 120px;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 
   margin-top: auto;
   padding-top: 12px;
@@ -267,11 +267,12 @@
     }
 
 .like {
-  width: 120px;
+  min-width: 105px;
+  height: 40px;
 
   border: 1px solid #e5e5e5;
   border-radius: 20px;
-  padding: 7px 11px;
+  padding: 0 10px;
 
   background: white;
   color: #555;
@@ -284,7 +285,6 @@
   justify-content: center;
 
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .like.active {
@@ -467,11 +467,11 @@
   line-height: 1.6;
   color: #555;
 }
-    .more {
+   .more {
   border: none;
   background: transparent;
-
-  padding: 4px 6px;
+  padding: 4px 0;
+  margin: 0;
 
   font-size: 12px;
   font-weight: 600;
@@ -479,7 +479,6 @@
 
   cursor: pointer;
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .more:hover {
