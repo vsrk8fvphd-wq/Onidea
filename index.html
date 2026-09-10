@@ -951,7 +951,14 @@ function closeIdeaDetail() {
   document.getElementById("ideaModal").classList.remove("show");
 }
 function showBestIdeas() {
-  alert("BEST IDEA 눌림");
+  const modal = document.getElementById("bestIdeaModal");
+
+  if (!modal) {
+    alert("bestIdeaModal을 못 찾음");
+    return;
+  }
+
+  modal.style.setProperty("display", "flex", "important");
 }
 
 function closeBestIdeas() {
