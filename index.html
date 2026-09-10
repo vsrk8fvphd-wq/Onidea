@@ -951,62 +951,43 @@ function closeIdeaDetail() {
   document.getElementById("ideaModal").classList.remove("show");
 }
 function showBestIdeas() {
-  try {
-    const list = document.getElementById("bestIdeaList");
+  const list = document.getElementById("bestIdeaList");
 
-    alert("1단계 : list 확인\n" + list);
+  if (!list || !window.currentIdeas) return;
 
-    if (!list || !window.currentIdeas) {
-      alert("2단계에서 중단됨");
-      return;
-    }
+  const bestIdeas = [...window.currentIdeas]
+    .sort((a, b) => (b.like_count || 0) - (a.like_count || 0))
+    .slice(0, 5);
 
-    const bestIdeas = [...window.currentIdeas]
-      .sort((a, b) => (b.like_count || 0) - (a.like_count || 0))
-      .slice(0, 5);
+  list.innerHTML = "";
 
-    alert("2단계 : TOP 5 생성 완료\n" + bestIdeas.length + "개");
+  bestIdeas.forEach((idea, index) => {
+    const item = document.createElement("button");
 
-    list.innerHTML = "";
+    item.className = "best-idea-item";
 
-    bestIdeas.forEach((idea, index) => {
-      const item = document.createElement("button");
+    item.onclick = function () {
+      closeBestIdeas();
+      showIdeaDetail(idea.id);
+    };
 
-      item.className = "best-idea-item";
+    item.innerHTML = `
+      <div class="best-rank">
+        ${index + 1}
+      </div>
 
-      item.onclick = function () {
-        closeBestIdeas();
-        showIdeaDetail(idea.id);
-      };
+      <div class="best-info">
+        <span class="tag">${idea.category}</span>
+        <h3>${idea.title}</h3>
+      </div>
 
-      item.innerHTML = `
-        <div class="best-rank">
-          ${index + 1}
-        </div>
+      <div class="best-like">
+        👍 ${idea.like_count || 0}
+      </div>
+    `;
 
-        <div class="best-info">
-          <span class="tag">${idea.category}</span>
-          <h3>${idea.title}</h3>
-        </div>
-
-        <div class="best-like">
-          👍 ${idea.like_count || 0}
-        </div>
-      `;
-
-      list.appendChild(item);
-    });
-
-    alert("3단계 : TOP 5 화면 생성 완료");
-
-    document.getElementById("bestIdeaModal").classList.add("show");
-
-    alert("4단계 : 팝업 열기 완료");
-
-  } catch (error) {
-    alert("❌ 오류 발생:\n" + error.message);
-  }
-}
+    list.appendChild(item);
+  });
 
   document.getElementById("bestIdeaModal").classList.add("show");
 }
