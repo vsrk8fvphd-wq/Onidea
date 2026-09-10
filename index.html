@@ -953,10 +953,14 @@ function closeIdeaDetail() {
 function showBestIdeas() {
   const modal = document.getElementById("bestIdeaModal");
 
-  if (!modal) {
-    alert("bestIdeaModal을 못 찾음");
-    return;
-  }
+  alert(
+    "modal: " + modal +
+    "\n현재 class: " + modal.className +
+    "\n현재 display: " + getComputedStyle(modal).display
+  );
+
+  modal.classList.add("show");
+}
 
   modal.style.setProperty("display", "flex", "important");
 }
