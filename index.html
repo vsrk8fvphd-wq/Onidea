@@ -526,7 +526,18 @@
 
   flex-shrink: 0;
 }
+.best-rank.rank-1,
+.best-rank.rank-2,
+.best-rank.rank-3 {
+  background: #fff8e1;
+  font-size: 18px;
+}
 
+.best-rank.rank-4,
+.best-rank.rank-5 {
+  background: #f3f3f3;
+  font-size: 13px;
+}
 .best-info {
   min-width: 0;
   flex: 1;
@@ -541,6 +552,7 @@
   margin: 0;
 
   font-size: 14px;
+    font-weight: 700;
   line-height: 1.4;
 
   white-space: nowrap;
@@ -971,10 +983,10 @@ function showBestIdeas() {
 
     item.className = "best-idea-item";
 
-    item.innerHTML = `
-      <div class="best-rank">
-        ${index + 1}
-      </div>
+item.innerHTML = `
+  <div class="best-rank rank-${index + 1}">
+    ${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1}
+  </div>
 
       <div class="best-info">
         <span class="tag">${idea.category || ""}</span>
