@@ -184,33 +184,43 @@
   align-items: stretch;
 }
 .idea-card {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-
+.idea-card {
+  width: 100%;
+  min-width: 0;
   height: 275px;
+
   padding: 16px;
 
   border: 1px solid #e8e8e8;
   border-radius: 18px;
+
   background: #ffffff;
 
   display: flex;
   flex-direction: column;
 
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  /* 내용이 카드 밖으로 밀려나가지 않도록 */
+  overflow: hidden;
+
+  /* 눌렀을 때 살짝 반응 */
+  transition: transform 0.15s ease;
 }
 
 .idea-card:active {
   transform: scale(0.98);
 }
 
-   .tag {
+.idea-card:active {
+  transform: scale(0.98);
+}
+
+ .tag {
   display: inline-flex;
   align-items: center;
   width: fit-content;
 
   padding: 6px 9px;
+
   border-radius: 8px;
 
   background: #eef2ff;
@@ -220,20 +230,19 @@
   font-weight: 700;
   line-height: 1;
 }
-    .idea-card h3 {
+   .idea-card h3 {
   margin: 13px 0 8px;
 
   font-size: 16px;
   line-height: 1.45;
   letter-spacing: -0.5px;
 
-  /* 제목이 너무 길어도 카드 높이 유지 */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
-    .idea-card p {
+   .idea-card p {
   margin: 0;
 
   color: #777;
@@ -245,7 +254,6 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
 }
-
 .idea-bottom {
   display: flex;
   justify-content: space-between;
@@ -256,7 +264,6 @@
 
   border-top: 1px solid #f0f0f0;
 }
-
     .author {
       color: #999;
       font-size: 12px;
@@ -280,6 +287,7 @@
   color: #3156d3;
   border-color: #cfd8ff;
 }
+
 
     footer {
       padding: 25px 22px 40px;
