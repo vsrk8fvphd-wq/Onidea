@@ -131,6 +131,37 @@
       color: #888;
       font-size: 13px;
     }
+    .idea-filter {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 0 6px;
+  margin-bottom: 12px;
+
+  /* 모바일에서 가로 스크롤바 숨김 */
+  scrollbar-width: none;
+}
+
+.idea-filter::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-btn {
+  flex-shrink: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 8px 14px;
+  background: white;
+  color: #777;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.filter-btn.active {
+  background: #3156d3;
+  color: white;
+  border-color: #3156d3;
+}
     .idea-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -436,6 +467,21 @@
       </div>
 
       <div id="ideas">
+        <div id="idea-filter" class="idea-filter">
+  <button type="button" class="filter-btn active" onclick="filterIdeas('전체', this)">
+    전체
+  </button>
+
+  <button type="button" class="filter-btn" onclick="filterIdeas('디지털·기술(예시)', this)">
+    디지털·기술
+  </button>
+
+  <button type="button" class="filter-btn" onclick="filterIdeas('산업안전(예시)', this)">
+    산업안전
+  </button>
+</div>
+
+<div class="idea-list">
       <div class="idea-list">
         <div class="idea-card">
           <span class="tag">디지털·기술(예시)</span>
@@ -504,6 +550,32 @@
      SUPABASE_URL,
      SUPABASE_PUBLISHABLE_KEY
     );
+    function filterIdeas(category, selectedButton) {
+  const cards = document.querySelectorAll(".idea-card");
+  const buttons = document.querySelectorAll(".filter-btn");
+
+  // 선택된 버튼 표시
+  buttons.forEach(button => {
+    button.classList.remove("active");
+  });
+
+  selectedButton.classList.add("active");
+
+  // 카드 필터링
+  cards.forEach(card => {
+    const tag = card.querySelector(".tag");
+
+    if (!tag) return;
+
+    const cardCategory = tag.textContent.trim();
+
+    if (category === "전체" || cardCategory === category) {
+      card.style.display = "";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
     function submitIdea() {
       window.location.href = "https://naver.me/5B0IPY1y";
     }
