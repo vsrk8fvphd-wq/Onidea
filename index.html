@@ -855,30 +855,64 @@ renderIdeas(ideas);
      SUPABASE_URL,
      SUPABASE_PUBLISHABLE_KEY
     );
-    function filterIdeas(category, selectedButton) {
-  const cards = document.querySelectorAll(".idea-card");
+   window.selectedCategory = "전체";
+
+function filterIdeas(category, selectedButton) {
+  window.selectedCategory = category;
+
   const buttons = document.querySelectorAll(".filter-btn");
 
-  // 선택된 버튼 표시
   buttons.forEach(button => {
     button.classList.remove("active");
   });
 
   selectedButton.classList.add("active");
 
-  // 카드 필터링
-  cards.forEach(card => {
-    const tag = card.querySelector(".tag");
+  applyIdeaFilters();
+}
 
-    if (!tag) return;
+function searchIdeas() {
+  applyIdeaFilters();
+}
 
-    const cardCategory = tag.textContent.trim();
+function applyIdeaFilters() {
+  const keyword =
+    (document.getElementById("ideaSearchInput")?.value || "")
+      .trim()
+      .toLowerCase();
 
-    if (category === "전체" || cardCategory === category) {
-      card.style.display = "";
-    } else {
-      card.style.display = "none";
-    }
+  document.querySelectorAll(".idea-card").forEach(card => {
+    const ideaId = Number(card.dataset.ideaId);
+
+    const idea = window.currentIdeas?.find(
+      item => item.id === ideaId
+    );
+
+    if (!idea) return;
+
+    // 카테고리 조건
+    const categoryMatch =
+      window.selectedCategory === "전체" ||
+      idea.category === window.selectedCategory;
+
+    // 검색 조건
+    const searchText = [
+      idea.title,
+      idea.content,
+      idea.problem,
+      idea.effect,
+      idea.category
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    const keywordMatch =
+      !keyword || searchText.includes(keyword);
+
+    // 두 조건 모두 만족해야 표시
+    card.style.display =
+      categoryMatch && keywordMatch ? "" : "none";
   });
 }
     function submitIdea() {
@@ -994,6 +1028,7 @@ function renderIdeas(ideas) {
   ideas.forEach(idea => {
     const card = document.createElement("div");
     card.className = "idea-card";
+    card.dataset.ideaId = idea.id;
 
     card.innerHTML = `
       <span class="tag">${idea.category}</span>
