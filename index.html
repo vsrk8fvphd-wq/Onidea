@@ -186,6 +186,20 @@
   color: #aaa;
 }
 
+    .idea-search-button {
+  flex-shrink: 0;
+  height: 32px;
+  padding: 0 13px;
+  border: none;
+  border-radius: 10px;
+  background: #3156d3;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .filter-btn {
   flex-shrink: 0;
   border: 1px solid #e5e5e5;
@@ -794,15 +808,23 @@
 
 
   </div>
-  <div class="idea-search">
-    <span class="idea-search-icon">🔍</span>
-    <input
-      type="text"
-      id="ideaSearchInput"
-      placeholder="아이디어 키워드를 검색해보세요."
-      oninput="searchIdeas()"
-    />
-  </div>
+<div class="idea-search">
+  <span class="idea-search-icon">🔍</span>
+
+  <input
+    type="text"
+    id="ideaSearchInput"
+    placeholder="아이디어 제목이나 키워드를 검색해보세요"
+  />
+
+  <button
+    type="button"
+    class="idea-search-button"
+    onclick="searchIdeas()"
+  >
+    검색
+  </button>
+</div>
 
   <div class="idea-list">
         </div> 
