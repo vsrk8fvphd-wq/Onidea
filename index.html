@@ -815,6 +815,7 @@
     type="text"
     id="ideaSearchInput"
     placeholder="아이디어 제목이나 키워드를 검색해보세요"
+    onkeydown="if(event.key === 'Enter') searchIdeas()"
   />
 
   <button
