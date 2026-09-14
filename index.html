@@ -681,6 +681,65 @@ gap: 4px;
     #bestIdeaModal.show {
   display: flex !important;
 }
+    .reward-info {
+  width: 100%;
+  margin-top: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.reward-title {
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+}
+
+.reward-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.reward-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.reward-label span {
+  flex-shrink: 0;
+  font-size: 15px;
+}
+
+.reward-label strong {
+  font-size: 12px;
+  font-weight: 600;
+  color: #444;
+  white-space: nowrap;
+}
+
+.reward-label small {
+  font-size: 10px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.reward-prize {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: #3156d3;
+  text-align: right;
+  white-space: nowrap;
+}
   </style>
 </head>
 
@@ -788,7 +847,46 @@ gap: 4px;
       <button class="secondary" onclick="showBestIdeas()">
         🏆 BEST IDEA
       </button>
+<div class="reward-info">
 
+  <div class="reward-title">
+    🏆 아이디어 포상
+  </div>
+
+  <div class="reward-item">
+    <div class="reward-label">
+      <span>🥇</span>
+      <strong>우수 아이디어</strong>
+      <small>1건</small>
+    </div>
+    <div class="reward-prize">
+      온누리상품권 10만원
+    </div>
+  </div>
+
+  <div class="reward-item">
+    <div class="reward-label">
+      <span>👍</span>
+      <strong>공감 아이디어</strong>
+      <small>1건</small>
+    </div>
+    <div class="reward-prize">
+      코레일 전동열차 블럭
+    </div>
+  </div>
+
+  <div class="reward-item">
+    <div class="reward-label">
+      <span>💡</span>
+      <strong>아이디어 최다 제안자</strong>
+      <small>1명</small>
+    </div>
+    <div class="reward-prize">
+      코레일 전동열차 블럭
+    </div>
+  </div>
+
+</div>
       <div class="notice">
         <strong>한 줄 아이디어도 OK!</strong><br>
         "이렇게 바뀌면 더 좋겠다!"는 개선 아이디어라면 편하게 제안해주세요.<br>
