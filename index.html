@@ -186,17 +186,18 @@
   color: #aaa;
 }
 
-  .idea-search-button {
+.idea-search-button {
   flex-shrink: 0;
-  height: 28px;
-  padding: 0 12px;
-  border: 1px solid #3156d3;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #3156d3;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #3156d3;
+  color: #ffffff;
   font-family: inherit;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -821,11 +822,14 @@
     onkeydown="if(event.key === 'Enter') searchIdeas()"
   />
 
-  <button
-    type="button"
-    class="idea-search-button"
-    onclick="searchIdeas()"
-  >
+<button
+  type="button"
+  class="idea-search-button"
+  onclick="searchIdeas()"
+  aria-label="검색"
+>
+  ➜
+</button>
     검색
   </button>
 </div>
