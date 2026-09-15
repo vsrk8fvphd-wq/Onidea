@@ -325,14 +325,12 @@
   overflow: hidden;
 }
 .idea-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
-
   margin-top: auto;
   padding-top: 12px;
-
   border-top: 1px solid #f0f0f0;
 }
 
@@ -1178,6 +1176,9 @@ function renderIdeas(ideas) {
   ideas.forEach(idea => {
     const card = document.createElement("div");
     card.className = "idea-card";
+    card.onclick = function () {
+  showIdeaDetail(idea.id);
+};
     card.dataset.ideaId = idea.id;
 
     card.innerHTML = `
@@ -1190,12 +1191,6 @@ function renderIdeas(ideas) {
       </p>
 
 <div class="idea-bottom">
-  <button
-    class="more"
-    onclick="showIdeaDetail(${idea.id})"
-  >
-    자세히 보기 〉
-  </button>
 
   <button
     class="like"
