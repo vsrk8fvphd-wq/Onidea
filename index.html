@@ -981,10 +981,11 @@ gap: 4px;
     const SUPABASE_URL = "https://hpxkhtkhzusudseewzjc.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_HxGIiny_jdgL15aYHBSfgQ_Dd69Sdxa";
 
-    async function loadIdeas() {
+async function loadIdeas() {
   try {
+    // ① 아이디어 불러오기
     const response = await fetch(
-`${SUPABASE_URL}/rest/v1/ideas?select=id,title,content,problem,effect,category,status,created_at,like_count,idea_images(image_url,sort_order)&order=created_at.desc`,
+      `${SUPABASE_URL}/rest/v1/ideas?select=id,title,content,problem,effect,category,status,created_at,like_count&order=created_at.desc`,
       {
         headers: {
           "apikey": SUPABASE_PUBLISHABLE_KEY,
@@ -994,14 +995,42 @@ gap: 4px;
     );
 
     if (!response.ok) {
-      throw new Error(`Supabase 오류: ${response.status}`);
+      throw new Error(`Supabase 아이디어 오류: ${response.status}`);
     }
 
     const ideas = await response.json();
 
+    // ② 사진 정보 불러오기
+    const imageResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/idea_images?select=idea_id,image_url,sort_order&order=sort_order.asc`,
+      {
+        headers: {
+          "apikey": SUPABASE_PUBLISHABLE_KEY,
+          "Authorization": `Bearer ${SUPABASE_PUBLISHABLE_KEY}`
+        }
+      }
+    );
+
+    if (!imageResponse.ok) {
+      throw new Error(`Supabase 사진 오류: ${imageResponse.status}`);
+    }
+
+    const images = await imageResponse.json();
+
+    // ③ 아이디어별로 사진 연결
+    ideas.forEach(idea => {
+      idea.idea_images = images
+        .filter(image => image.idea_id === idea.id)
+        .sort((a, b) => a.sort_order - b.sort_order);
+    });
+
     console.log("Supabase 아이디어:", ideas);
+    console.log("Supabase 사진:", images);
+
     window.currentIdeas = ideas;
-renderIdeas(ideas);
+
+    renderIdeas(ideas);
+
     return ideas;
 
   } catch (error) {
