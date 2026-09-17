@@ -755,6 +755,19 @@ gap: 4px;
   text-align: right;
   white-space: nowrap;
 }
+    #modalImages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#modalImages img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
   </style>
 </head>
 
@@ -1244,7 +1257,7 @@ function renderIdeas(ideas) {
   <button
     class="like"
     data-idea-id="${idea.id}"
-    onclick="likeIdea(this)"
+  onclick="likeIdea(this); event.stopPropagation();"
   >
     👍 공감 <span>${idea.like_count || 0}</span>
   </button>
@@ -1254,7 +1267,7 @@ function renderIdeas(ideas) {
     list.appendChild(card);
   });
 }
-    function showIdeaDetail(id) {
+function showIdeaDetail(id) {
   const idea = window.currentIdeas?.find(item => item.id === id);
 
   if (!idea) return;
@@ -1273,6 +1286,31 @@ function renderIdeas(ideas) {
 
   document.getElementById("modalEffect").textContent =
     idea.effect || "내용 없음";
+
+  const imagesSection = document.getElementById("modalImagesSection");
+  const imagesContainer = document.getElementById("modalImages");
+
+  imagesContainer.innerHTML = "";
+
+  const images = (idea.idea_images || [])
+    .slice()
+    .sort((a, b) => Number(a.sort_order) - Number(b.sort_order));
+
+  if (images.length > 0) {
+    imagesSection.style.display = "";
+
+    images.forEach(image => {
+      const img = document.createElement("img");
+
+      img.src = image.image_url;
+      img.alt = "아이디어 관련 사진";
+
+      imagesContainer.appendChild(img);
+    });
+
+  } else {
+    imagesSection.style.display = "none";
+  }
 
   document.getElementById("ideaModal").classList.add("show");
 }
@@ -1356,7 +1394,10 @@ function closeBestIdeas() {
       <h4>✨ 기대효과</h4>
       <p id="modalEffect"></p>
     </div>
-
+<div class="modal-section" id="modalImagesSection">
+  <h4>📷 관련 사진</h4>
+  <div id="modalImages"></div>
+</div>
   </div>
 </div>
 
