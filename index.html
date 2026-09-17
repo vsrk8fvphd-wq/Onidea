@@ -984,7 +984,7 @@ gap: 4px;
     async function loadIdeas() {
   try {
     const response = await fetch(
-`${SUPABASE_URL}/rest/v1/ideas?select=id,title,content,problem,effect,category,status,created_at,like_count&order=created_at.desc`,
+`${SUPABASE_URL}/rest/v1/ideas?select=id,title,content,problem,effect,category,status,created_at,like_count,idea_images(image_url,sort_order)&order=created_at.desc`,
       {
         headers: {
           "apikey": SUPABASE_PUBLISHABLE_KEY,
