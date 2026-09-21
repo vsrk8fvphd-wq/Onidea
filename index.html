@@ -1432,6 +1432,87 @@ function showIdeaDetail(id) {
   }
   document.getElementById("ideaModal").classList.add("show");
 }
+
+    async function likeIdea(button) {
+  const ideaId = Number(button.dataset.ideaId);
+  const number = button.querySelector("span");
+
+  try {
+    const { data, error } = await supabaseClient.functions.invoke(
+      "toggle-idea-vote",
+      {
+        body: {
+          ideaId: ideaId,
+          voterKey: voterKey
+        }
+      }
+    );
+
+    if (error) {
+      console.error("공감 처리 실패:", error);
+
+      // IP 중복 차단
+      if (error.context) {
+        try {
+          const errorData = await error.context.json();
+
+          if (errorData.action === "blocked") {
+            alert(
+              errorData.message ||
+              "이 아이디어에는 이미 공감하셨습니다."
+            );
+            return;
+          }
+        } catch (e) {
+          console.error("차단 응답 확인 실패:", e);
+        }
+      }
+
+      alert("공감 처리에 실패했어요.");
+      return;
+    }
+
+    // 공감 성공
+    if (data.action === "liked") {
+      button.classList.add("active");
+
+      const currentCount = Number(number.textContent) || 0;
+      number.textContent = currentCount + 1;
+
+      const idea = window.currentIdeas?.find(
+        item => Number(item.id) === ideaId
+      );
+
+      if (idea) {
+        idea.like_count = currentCount + 1;
+      }
+
+      return;
+    }
+
+    // 공감 취소 성공
+    if (data.action === "unliked") {
+      button.classList.remove("active");
+
+      const currentCount = Number(number.textContent) || 0;
+      number.textContent = Math.max(0, currentCount - 1);
+
+      const idea = window.currentIdeas?.find(
+        item => Number(item.id) === ideaId
+      );
+
+      if (idea) {
+        idea.like_count = Math.max(0, currentCount - 1);
+      }
+
+      return;
+    }
+
+  } catch (error) {
+    console.error("공감 처리 오류:", error);
+    alert("공감 처리 중 오류가 발생했어요.");
+  }
+}
 async function likeIdeaFromModal(button) {
   const ideaId = Number(button.dataset.ideaId);
 
