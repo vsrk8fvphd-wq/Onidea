@@ -1665,5 +1665,45 @@ function closeBestIdeas() {
 
   </div>
 </div>
+
+  <script>
+  function closeOpeningModal() {
+    const modal = document.getElementById("openingModal");
+
+    if (modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  function updateOpeningCountdown() {
+    const countdown = document.getElementById("openingCountdown");
+    const modal = document.getElementById("openingModal");
+
+    if (!countdown || !modal) return;
+
+    const now = new Date();
+    const diff = ONIDEA_OPEN_DATE.getTime() - now.getTime();
+
+    // 정식 오픈 시간이 되면 자동으로 팝업 닫기
+    if (diff <= 0) {
+      modal.style.display = "none";
+      return;
+    }
+
+    const totalSeconds = Math.floor(diff / 1000);
+
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    countdown.textContent =
+      `D-${days}일 ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  updateOpeningCountdown();
+
+  setInterval(updateOpeningCountdown, 1000);
+</script>
 </body>
 </html>
