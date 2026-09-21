@@ -1189,6 +1189,11 @@ async function loadIdeas() {
      SUPABASE_URL,
      SUPABASE_PUBLISHABLE_KEY
     );
+const voterKey =
+  localStorage.getItem("onidea_voter_key") || crypto.randomUUID();
+
+localStorage.setItem("onidea_voter_key", voterKey);
+    
    window.selectedCategory = "전체";
 
 function filterIdeas(category, selectedButton) {
