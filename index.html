@@ -890,6 +890,44 @@ gap: 4px;
   font-weight: 700;
   cursor: pointer;
 }
+.idea-period {
+  width: 100%;
+  margin: 4px 0 12px;
+  padding: 13px 16px;
+  box-sizing: border-box;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.idea-period-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 26px;
+}
+
+.idea-period-row + .idea-period-row {
+  margin-top: 4px;
+}
+
+.idea-period-label {
+  color: #333;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.idea-period-label strong {
+  font-weight: 700;
+}
+
+.idea-period-date {
+  color: #777;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
   </style>
 </head>
 
@@ -989,7 +1027,17 @@ gap: 4px;
     </section>
 
     <main class="main">
+<div class="idea-period">
+  <div class="idea-period-row">
+    <span class="idea-period-label">📌 <strong>아이디어 제안 기간</strong></span>
+    <span class="idea-period-date">9.28(월) ~ 10.23(금)</span>
+  </div>
 
+  <div class="idea-period-row">
+    <span class="idea-period-label">👍 <strong>공감 집계 기간</strong></span>
+    <span class="idea-period-date">9.28(월) ~ 10.30(금)</span>
+  </div>
+</div>
       <button class="primary" onclick="submitIdea()">
         💡 아이디어 제출</br>
         <strong>※ 제출하신 아이디어는 검토 후 게시됩니다.</strong>
