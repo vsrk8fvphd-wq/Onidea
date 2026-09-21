@@ -1351,13 +1351,13 @@ function renderIdeas(ideas) {
 
 <div class="idea-bottom">
 
-  <button
-    class="like"
-    data-idea-id="${idea.id}"
-  onclick="likeIdea(this); event.stopPropagation();"
-  >
-    👍 공감 <span>${idea.like_count || 0}</span>
-  </button>
+<button
+  class="like"
+  data-idea-id="${idea.id}"
+  onclick="event.stopPropagation(); likeIdea(this);"
+>
+  👍 공감 <span>${idea.like_count || 0}</span>
+</button>
 </div>
     `;
 
