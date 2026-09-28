@@ -1194,14 +1194,19 @@ async function loadIdeas() {
       throw new Error(`Supabase 아이디어 오류: ${response.status}`);
     }
 
-    const ideas = await response.json();
+const ideas = await response.json();
 
-    console.log("Supabase 아이디어:", ideas);
+console.log("Supabase 아이디어:", ideas);
 
-    window.currentIdeas = ideas;
+// 비공개 상태인 아이디어는 웹사이트에서 숨김
+const publicIdeas = ideas.filter(
+  idea => idea.status !== "비공개"
+);
 
-    // ② 아이디어는 사진과 관계없이 먼저 표시
-    renderIdeas(ideas);
+window.currentIdeas = publicIdeas;
+
+// 공개된 아이디어만 표시
+renderIdeas(publicIdeas);
 
     // ③ 사진은 별도로 불러오기
     try {
@@ -1224,14 +1229,14 @@ async function loadIdeas() {
       console.log("Supabase 사진:", images);
 
       // ④ 아이디어와 사진 연결
-      ideas.forEach(idea => {
-        idea.idea_images = images
-          .filter(image => Number(image.idea_id) === Number(idea.id))
-          .sort((a, b) => Number(a.sort_order) - Number(b.sort_order));
-      });
+publicIdeas.forEach(idea => {
+  idea.idea_images = images
+    .filter(image => Number(image.idea_id) === Number(idea.id))
+    .sort((a, b) => Number(a.sort_order) - Number(b.sort_order));
+});
 
-      // 사진 연결이 완료되면 다시 렌더링
-      renderIdeas(ideas);
+// 사진 연결이 완료되면 다시 렌더링
+renderIdeas(publicIdeas);
 
     } catch (imageError) {
       console.error("사진 불러오기 실패:", imageError);
