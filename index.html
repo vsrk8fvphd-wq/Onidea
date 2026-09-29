@@ -1779,11 +1779,11 @@ async function showBestIdeas() {
           <h3>${idea.title || ""}</h3>
         </div>
 
-        <button
-          class="best-like like"
-          data-idea-id="${idea.id}"
-          onclick="event.stopPropagation(); likeIdea(this);"
-        >
+<button
+  class="best-like"
+  data-idea-id="${idea.id}"
+  onclick="event.stopPropagation(); likeIdea(this);"
+>
           👍 <span>${idea.like_count || 0}</span>
         </button>
       `;
