@@ -1686,51 +1686,93 @@ async function likeIdeaFromModal(button) {
 function closeIdeaDetail() {
   document.getElementById("ideaModal").classList.remove("show");
 }
-function showBestIdeas() {
+async function showBestIdeas() {
   const modal = document.getElementById("bestIdeaModal");
   const list = document.getElementById("bestIdeaList");
 
   if (!modal || !list || !window.currentIdeas) return;
 
-  const bestIdeas = [...window.currentIdeas]
-    .sort((a, b) => (b.like_count || 0) - (a.like_count || 0))
-    .slice(0, 5);
+  try {
+    // 실제 공감 데이터 최신 조회
+    const { data: votes, error } = await supabaseClient
+      .from("idea_votes")
+      .select("idea_id");
 
-  list.innerHTML = "";
+    if (error) {
+      console.error("BEST IDEA 공감 수 조회 실패:", error);
+      return;
+    }
 
-  bestIdeas.forEach((idea, index) => {
-    const item = document.createElement("button");
+    // 아이디어별 실제 공감 수 계산
+    const voteCounts = {};
 
-    item.className = "best-idea-item";
+    votes.forEach(vote => {
+      const ideaId = Number(vote.idea_id);
 
-item.innerHTML = `
-  <div class="best-rank rank-${index + 1}">
-    ${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1}
-  </div>
+      voteCounts[ideaId] =
+        (voteCounts[ideaId] || 0) + 1;
+    });
 
-      <div class="best-info">
-        <span class="tag">${idea.category || ""}</span>
-        <h3>${idea.title || ""}</h3>
-      </div>
+    // 최신 공감 수를 currentIdeas에도 반영
+    window.currentIdeas.forEach(idea => {
+      idea.like_count = voteCounts[Number(idea.id)] || 0;
+    });
 
-     <button
-  class="best-like"
-  data-idea-id="${idea.id}"
-  onclick="likeIdea(this); event.stopPropagation();"
->
-  👍 <span>${idea.like_count || 0}</span>
-</button>
-    `;
+    // 실제 공감 수 기준 TOP 5
+    const bestIdeas = [...window.currentIdeas]
+      .sort(
+        (a, b) =>
+          (b.like_count || 0) - (a.like_count || 0)
+      )
+      .slice(0, 5);
 
-    item.onclick = function () {
-      closeBestIdeas();
-      showIdeaDetail(idea.id);
-    };
+    list.innerHTML = "";
 
-    list.appendChild(item);
-  });
+    bestIdeas.forEach((idea, index) => {
+      const item = document.createElement("div");
 
-  modal.classList.add("show");
+      item.className = "best-idea-item";
+
+      item.innerHTML = `
+        <div class="best-rank rank-${index + 1}">
+          ${
+            index === 0
+              ? "🥇"
+              : index === 1
+              ? "🥈"
+              : index === 2
+              ? "🥉"
+              : index + 1
+          }
+        </div>
+
+        <div class="best-info">
+          <span class="tag">${idea.category || ""}</span>
+          <h3>${idea.title || ""}</h3>
+        </div>
+
+        <button
+          class="best-like like"
+          data-idea-id="${idea.id}"
+          onclick="event.stopPropagation(); likeIdea(this);"
+        >
+          👍 <span>${idea.like_count || 0}</span>
+        </button>
+      `;
+
+      item.onclick = function () {
+        closeBestIdeas();
+        showIdeaDetail(idea.id);
+      };
+
+      list.appendChild(item);
+    });
+
+    modal.classList.add("show");
+
+  } catch (error) {
+    console.error("BEST IDEA 불러오기 오류:", error);
+  }
 }
 
 function closeBestIdeas() {
