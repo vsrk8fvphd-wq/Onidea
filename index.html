@@ -1756,23 +1756,27 @@ const bestIdeas = [...window.currentIdeas]
   .slice(0, 5);
 
     list.innerHTML = "";
+let currentRank = 0;
+let previousLikeCount = null;
+bestIdeas.forEach((idea, index) => {
 
-    bestIdeas.forEach((idea, index) => {
-      const item = document.createElement("div");
+  const likeCount = idea.like_count || 0;
+
+  if (likeCount !== previousLikeCount) {
+    currentRank = index + 1;
+    previousLikeCount = likeCount;
+  }
+
+  const item = document.createElement("div");
 
       item.className = "best-idea-item";
 
       item.innerHTML = `
         <div class="best-rank rank-${index + 1}">
-          ${
-            index === 0
-              ? "🥇"
-              : index === 1
-              ? "🥈"
-              : index === 2
-              ? "🥉"
-              : index + 1
-          }
+${currentRank === 1 
+  ? "🥇" : currentRank === 2 
+  ? "🥈" : currentRank === 3 
+  ? "🥉" : currentRank}
         </div>
 
         <div class="best-info">
