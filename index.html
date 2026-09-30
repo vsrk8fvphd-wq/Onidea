@@ -1747,12 +1747,13 @@ async function showBestIdeas() {
     });
 
     // 실제 공감 수 기준 TOP 5
-    const bestIdeas = [...window.currentIdeas]
-      .sort(
-        (a, b) =>
-          (b.like_count || 0) - (a.like_count || 0)
-      )
-      .slice(0, 5);
+const bestIdeas = [...window.currentIdeas]
+  .filter(idea => idea.status !== "예시")
+  .sort(
+    (a, b) =>
+      (b.like_count || 0) - (a.like_count || 0)
+  )
+  .slice(0, 5);
 
     list.innerHTML = "";
 
