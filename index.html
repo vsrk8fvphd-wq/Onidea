@@ -1010,6 +1010,35 @@ gap: 4px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+    
+.idea-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.idea-section-title h2 {
+  margin: 0;
+}
+
+.idea-total-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  background: #e8f3ff;
+  color: #3156d3;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.idea-total-count strong {
+  margin: 0 3px;
+  font-size: 15px;
+}
+
   </style>
 </head>
 
@@ -1174,10 +1203,14 @@ gap: 4px;
         <sstrong> ※ 단순 건의·불만·요청사항은 아이디어로 집계되지 않습니다.</sstrong>
       </div>
 
-      <div class="section-title">
-        <h2>💡 이런 아이디어가 있어요!</h2>
-        <span>ON:IDEA</span>
-      </div>
+
+<div class="idea-section-title">
+  <h2>이런 아이디어가 있어요!</h2>
+  <span class="idea-total-count">
+    총 <strong id="totalIdeaCount">0</strong>건
+  </span>
+</div>
+
 
 <div id="ideas">
 
@@ -1290,6 +1323,8 @@ for (let i = publicIdeas.length - 1; i > 0; i--) {
 }
 
 window.currentIdeas = publicIdeas;
+
+updateIdeaCount();
 
 // 랜덤 순서로 표시
 renderIdeas(publicIdeas);
@@ -1480,6 +1515,18 @@ async function loadLikeStatus() {
 loadIdeas().then(() => {
   loadLikeStatus();
 });
+    function updateIdeaCount() {
+  const countElement = document.getElementById("totalIdeaCount");
+
+  if (!countElement || !window.currentIdeas) return;
+
+  const totalCount = window.currentIdeas.filter(idea =>
+    idea.status !== "비공개" &&
+    idea.status !== "예시"
+  ).length;
+
+  countElement.textContent = totalCount;
+}
 function renderIdeas(ideas) {
   const list = document.querySelector(".idea-list");
 
@@ -1493,6 +1540,8 @@ function renderIdeas(ideas) {
     card.onclick = function () {
   showIdeaDetail(idea.id);
 };
+    
+
     card.dataset.ideaId = idea.id;
 
     card.innerHTML = `
